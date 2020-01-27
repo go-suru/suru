@@ -4,9 +4,9 @@ import "errors"
 
 type Do struct{}
 
-func (Do) Cmd() error {
+func (Do) Cmd(_ Context) error {
 	return errors.New("Cmder not implemented for Do")
 }
 
 func (Do) Short() string { return "Do some Task" }
-func (Do) Long() string  { return "TODO" }
+func (Do) Help() string  { return "TODO" }

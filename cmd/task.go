@@ -4,7 +4,7 @@ import "errors"
 
 type Task struct{}
 
-func (Task) Cmd() error {
+func (Task) Cmd(_ Context) error {
 	return errors.New("Cmder not implemented for Task")
 }
 

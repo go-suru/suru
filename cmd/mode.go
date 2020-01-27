@@ -4,7 +4,7 @@ import "errors"
 
 type Mode struct{}
 
-func (Mode) Cmd() error {
+func (Mode) Cmd(_ Context) error {
 	return errors.New("Cmder not implemented for Mode")
 }
 

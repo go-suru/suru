@@ -4,7 +4,7 @@ import "errors"
 
 type Sub struct{}
 
-func (Sub) Cmd() error {
+func (Sub) Cmd(_ Context) error {
 	return errors.New("Cmder not implemented for Sub")
 }
 

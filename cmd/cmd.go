@@ -1,6 +1,17 @@
 package cmd
 
-import "github.com/pkg/errors"
+import (
+	"bufio"
+
+	"github.com/pkg/errors"
+)
+
+type ParseErr struct{ error }
+
+func IsParseErr(err error) (is bool) {
+	_, is = err.(ParseErr)
+	return
+}
 
 // Helper defines a short description and a longer help message for use
 // in a help page.
@@ -15,17 +26,22 @@ type Parser interface {
 	Parse(arg string) (Cmder, error)
 }
 
+type Context struct {
+	*bufio.Writer
+}
+
 // Cmder is a simple CLI command interface.
 type Cmder interface {
-	Cmd() error
+	Cmd(Context) error
 }
 
 // CmdFn is a function implementation of Cmder.
-type CmdFn func() error
+type CmdFn func(Context) error
 
 // Cmd implements Cmder on CmdFn.
-func (c CmdFn) Cmd() error { return c() }
+func (c CmdFn) Cmd(cx Context) error { return c(cx) }
 
+var help = new(Help)
 var cmds = map[string]Cmder{
 	// User wants to enter interactive mode.
 	"live": Live{},
@@ -44,17 +60,19 @@ var cmds = map[string]Cmder{
 	// User wants to subscribe to a Suru stream.
 	"sub": Sub{},
 	// User wants help.
-	"help": Help{}, "h": Help{}, "?": Help{},
+	"help": help, "h": help, "?": help,
 }
 
 // Parse consumes a list of command-line arguments to return a Cmder.
-func Parse(args ...string) (Cmder, error) {
+func Parse(args ...string) (cc Cmder, err error) {
 	c, ok := cmds[args[0]]
 	if !ok {
-		return nil, errors.Errorf("unknown cmd %#q", args[0])
+		err = ParseErr{
+			errors.Errorf("unknown cmd %#q", args[0]),
+		}
+		return
 	}
-	var err error
-	for i := 0; i < len(args); i++ {
+	for i := 1; i < len(args); i++ {
 		if p, ok := c.(Parser); !ok {
 			break
 		} else if c, err = p.Parse(args[i]); err != nil {

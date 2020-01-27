@@ -9,7 +9,7 @@ var (
 	_ = Helper(Config{})
 )
 
-func (Config) Cmd() error {
+func (Config) Cmd(_ Context) error {
 	return errors.New("Cmder not implemented for Config")
 }
 

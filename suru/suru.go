@@ -1,27 +1,48 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"log"
 	"os"
 
+	"github.com/pkg/errors"
 	"gopkg.in/suru.v0/cmd"
 )
 
-const help = `suru v0.0.0`
+const version = `suru v0.0.0`
+
+func printUsage(w io.Writer) {
+	fmt.Fprintf(w, "Usage:\n%s", cmd.Help{}.Help())
+}
 
 func main() {
+	fmt.Fprintf(os.Stderr, "%s\n\n", version)
+
 	if len(os.Args) < 2 {
-		fmt.Fprintf(os.Stderr, "%s\n\nInsufficient args", help)
+		printUsage(os.Stderr)
 		os.Exit(1)
 	}
 
-	if cm, err := cmd.Parse(os.Args[1:]...); err != nil {
-		log.Fatalf("Failed to parse args: %s\n\n%s", err, help)
-	} else if err := cm.Cmd(); err != nil {
+	cm, err := cmd.Parse(os.Args[1:]...)
+	switch {
+	case cmd.IsParseErr(errors.Cause(err)):
+		fmt.Fprintf(os.Stderr, "Parsing failed: %s\n\n", err)
+		printUsage(os.Stderr)
+		os.Exit(1)
+	case err != nil:
+		log.Fatalf("Parsing failed: %s\n", err)
+		printUsage(os.Stderr)
+		os.Exit(1)
+	}
+
+	ctx := cmd.Context{Writer: bufio.NewWriter(os.Stderr)}
+	if err := cm.Cmd(ctx); err != nil {
 		log.Fatalf("Command failed: %s", err)
 	}
 
+	ctx.Flush()
 	// Parse CLI args
 	// Load config
 	// Set up peer connection & event source (if any)

@@ -4,7 +4,7 @@ import "errors"
 
 type Init struct{}
 
-func (Init) Cmd() error {
+func (Init) Cmd(_ Context) error {
 	return errors.New("Cmder not implemented for Init")
 }
 

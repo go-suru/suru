@@ -4,7 +4,7 @@ import "errors"
 
 type Pub struct{}
 
-func (Pub) Cmd() error {
+func (Pub) Cmd(_ Context) error {
 	return errors.New("Cmder not implemented for Pub")
 }
 
