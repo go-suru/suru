@@ -17,6 +17,7 @@ func TestHelp(t *testing.T) {
  - pub		Publish to a Suru channel
  - sub		Subscribe to a Suru channel
  - task		Schedule a new Task
+ - version	Print the Suru version (in SemVer 2.0)
 `[1:]
 
 	if outs := new(cmd.Help).Help(); outs != expect {

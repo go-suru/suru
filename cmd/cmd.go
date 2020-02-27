@@ -55,6 +55,8 @@ var cmds = map[string]Cmder{
 	"do": Do{},
 	// User wants to define or inspect a task.
 	"task": Task{},
+	// User wants to know the Suru version number.
+	"version": Version{},
 	// User wants to publish his work.
 	"pub": Pub{},
 	// User wants to subscribe to a Suru stream.
