@@ -7,18 +7,18 @@ import (
 	"log"
 	"os"
 
-	"github.com/pkg/errors"
+	"gopkg.in/suru.v0"
 	"gopkg.in/suru.v0/cmd"
-)
 
-const version = `suru v0.0.0`
+	"github.com/pkg/errors"
+)
 
 func printUsage(w io.Writer) {
 	fmt.Fprintf(w, "Usage:\n%s", cmd.Help{}.Help())
 }
 
 func main() {
-	fmt.Fprintf(os.Stderr, "%s\n\n", version)
+	fmt.Fprintf(os.Stderr, "Suru v%s\n\n", suru.Version)
 
 	if len(os.Args) < 2 {
 		printUsage(os.Stderr)
