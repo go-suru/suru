@@ -19,7 +19,7 @@ func (Live) Cmd(c Context) error {
 	}
 
 	return (&cui.State{Root: &renderer.Frame{
-		Contenter: view.Sprintf("Suru v%s", suru.Version),
+		Stringer: view.Sprintf("Suru v%s", suru.Version),
 	}}).Live(g)
 }
 

@@ -1,6 +1,8 @@
 package renderer
 
+import "fmt"
+
 type Popover interface {
 	Renderer
-	Contenter
+	fmt.Stringer
 }

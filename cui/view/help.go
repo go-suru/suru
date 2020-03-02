@@ -1,8 +1,6 @@
 package view
 
 import (
-	"io"
-
 	"gopkg.in/suru.v0/cui/renderer"
 	"gopkg.in/suru.v0/cui/state"
 
@@ -26,8 +24,10 @@ func (h *Help) Handle(g *gocui.Gui, v *gocui.View) error {
 	case StateUninitialized:
 		// Set up the Frame.
 		h.Renderer = &renderer.Frame{
-			VKey:      h.Key(),
-			Contenter: h,
+			VKey:     h.Key(),
+			Stringer: h,
+			Framed:   true,
+			Title:    "Help",
 		}
 
 		// Attach it to the root State as its Popover.
@@ -59,6 +59,10 @@ func (h *Help) Handle(g *gocui.Gui, v *gocui.View) error {
 	return nil
 }
 
-func (h Help) Content() (io.ReadCloser, error) {
-	return Buf(`Suru help`), nil
+func (h Help) String() string {
+	return `
+Hotkeys:
+	(h) Toggle Help
+	(q) Quit
+	`
 }

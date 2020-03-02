@@ -41,10 +41,15 @@ type CmdFn func(Context) error
 // Cmd implements Cmder on CmdFn.
 func (c CmdFn) Cmd(cx Context) error { return c(cx) }
 
-var help = new(Help)
+var (
+	help = new(Help)
+	vers Version
+	live Live
+)
+
 var cmds = map[string]Cmder{
 	// User wants to enter interactive mode.
-	"live": Live{},
+	"l": live, "live": live,
 	// User wants to add Suru metadata and hooks to a repo.
 	"init": Init{},
 	// User wants to configure Suru.
@@ -56,7 +61,7 @@ var cmds = map[string]Cmder{
 	// User wants to define or inspect a task.
 	"task": Task{},
 	// User wants to know the Suru version number.
-	"version": Version{},
+	"v": vers, "version": vers,
 	// User wants to publish his work.
 	"pub": Pub{},
 	// User wants to subscribe to a Suru stream.
