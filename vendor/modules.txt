@@ -1,0 +1,31 @@
+# github.com/BurntSushi/toml v0.3.1
+## explicit
+github.com/BurntSushi/toml
+# github.com/boltdb/bolt v1.3.1
+## explicit
+github.com/boltdb/bolt
+# github.com/davecgh/go-spew v1.1.0
+github.com/davecgh/go-spew/spew
+# github.com/jroimartin/gocui v0.4.0
+## explicit
+github.com/jroimartin/gocui
+# github.com/mattn/go-runewidth v0.0.8
+## explicit
+github.com/mattn/go-runewidth
+# github.com/nsf/termbox-go v0.0.0-20200204031403-4d2b513ad8be
+## explicit
+github.com/nsf/termbox-go
+# github.com/pkg/errors v0.9.1
+## explicit
+github.com/pkg/errors
+# github.com/pmezard/go-difflib v1.0.0
+github.com/pmezard/go-difflib/difflib
+# github.com/stretchr/testify v1.5.1
+## explicit
+github.com/stretchr/testify/assert
+# golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527
+## explicit
+golang.org/x/sys/unix
+# gopkg.in/yaml.v2 v2.2.2
+## explicit
+gopkg.in/yaml.v2
