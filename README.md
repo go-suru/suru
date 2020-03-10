@@ -32,6 +32,9 @@ can run the built-in webservice.
 > suru help
 # ...
 
+> suru help config
+# ...
+
 > suru help topic
 # ...
 
@@ -47,6 +50,11 @@ can run the built-in webservice.
 > suru help sub
 # ...
 ```
+
+### suru config
+
+`suru config` configures Suru.  Use `suru config gen` to generate a new
+config.
 
 ### suru topic
 
