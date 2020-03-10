@@ -3,8 +3,16 @@ package cmd
 import (
 	"bufio"
 
+	"gopkg.in/suru.v0/config"
+
+	"github.com/boltdb/bolt"
 	"github.com/pkg/errors"
 )
+
+// Commands which implement DB want a database connection.
+type DB interface {
+	WantsDB()
+}
 
 type ParseErr struct{ error }
 
@@ -27,7 +35,10 @@ type Parser interface {
 }
 
 type Context struct {
+	config.Config
+
 	*bufio.Writer
+	*bolt.DB
 }
 
 // Cmder is a simple CLI command interface.
@@ -53,7 +64,7 @@ var cmds = map[string]Cmder{
 	// User wants to add Suru metadata and hooks to a repo.
 	"init": Init{},
 	// User wants to configure Suru.
-	"config": Config{},
+	"config": new(Config),
 	// User wants to decide what mode (public, etc.) to use.
 	"mode": Mode{},
 	// User wants to start on a task.
