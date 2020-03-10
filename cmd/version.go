@@ -8,14 +8,11 @@ var (
 	v Version
 
 	_ = Helper(v)
-	_ = Parser(v)
+	_ = Cmder(v)
 )
 
-func (v Version) Cmd(_ Context) error { return nil }
-
-
-func (v Version) Parse(next string) (cc Cmder, err error) {
-	return Printer("Suru v"+suru.Version), nil
+func (v Version) Cmd(c Context) error {
+	return Printer("Suru v" + suru.Version).Cmd(c)
 }
 
 func (Version) Short() string {
