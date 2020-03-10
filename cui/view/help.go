@@ -62,7 +62,7 @@ func (h *Help) Handle(g *gocui.Gui, v *gocui.View) error {
 func (h Help) String() string {
 	return `
 Hotkeys:
-	(h) Toggle Help
-	(q) Quit
-	`
+        (h) Toggle Help
+        (q) Quit
+`[1:]
 }

@@ -1,9 +1,6 @@
 package cui
 
 import (
-	"os"
-	"os/signal"
-
 	"gopkg.in/suru.v0/cui/state"
 	"gopkg.in/suru.v0/cui/view"
 
@@ -14,7 +11,7 @@ import (
 func (s *State) Live(g *gocui.Gui) error {
 	defer g.Close()
 
-	var ss *state.State = (*state.State)(s)
+	var ss *state.State = &s.State
 
 	g.SetManager(s)
 
@@ -39,7 +36,7 @@ func (s *State) Live(g *gocui.Gui) error {
 	// TODO: Respect SIGINT even if caught in a dead loop.
 	//       Probably just put a Context everywhere and insist on
 	//       checking its Done channel.
-	signal.Notify(os.Interrupt)
+	// signal.Notify(os.Interrupt)
 
 	if err := g.MainLoop(); err != nil && err != gocui.ErrQuit {
 		return errors.Wrap(err, "main UI loop")

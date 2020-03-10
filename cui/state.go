@@ -4,11 +4,15 @@ import (
 	"gopkg.in/suru.v0/cui/renderer"
 	"gopkg.in/suru.v0/cui/state"
 
+	"github.com/boltdb/bolt"
 	"github.com/jroimartin/gocui"
 	"github.com/pkg/errors"
 )
 
-type State state.State
+type State struct {
+	state.State
+	*bolt.DB
+}
 
 func (s *State) Layout(g *gocui.Gui) error {
 	ctx := context{

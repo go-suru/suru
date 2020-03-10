@@ -7,11 +7,13 @@ import (
 	"io"
 	"log"
 	"os"
+	"path/filepath"
 
 	"gopkg.in/suru.v0"
 	"gopkg.in/suru.v0/cmd"
 	"gopkg.in/suru.v0/config"
 
+	"github.com/boltdb/bolt"
 	"github.com/pkg/errors"
 )
 
@@ -78,8 +80,20 @@ func main() {
 		}
 	}
 
+	var db *bolt.DB
+	if cdb, ok := cm.(cmd.DB); ok {
+		_ = cdb
+		path := filepath.Join(cfg.Data, "suru.db")
+		db, err := bolt.Open(path, 0600, new(bolt.Options))
+		if err != nil {
+			log.Fatalf("Opening DB failed: %s", err)
+		}
+		defer db.Close()
+	}
+
 	ctx := cmd.Context{
 		Writer: bufio.NewWriter(os.Stderr),
+		DB:     db,
 		Config: cfg,
 	}
 	if err := cm.Cmd(ctx); err != nil {
@@ -89,6 +103,7 @@ func main() {
 	ctx.Flush()
 	// Parse CLI args
 	// Load config
+	// TODO: Encrypt DB at rest.
 	// Set up peer connection & event source (if any)
 	// Updates available? (if online mode)
 	//   - How to make this non-intrusive and optional
