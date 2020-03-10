@@ -12,12 +12,12 @@ func TestHelp(t *testing.T) {
  - do		Do some Task
  - help (h, ?)	Help for Suru commands (with shortcuts)
  - init		Initialize Suru for a repo
- - live		Enter live mode
+ - live (l)	Enter live mode
  - mode		Set the Mode (default Private)
  - pub		Publish to a Suru channel
  - sub		Subscribe to a Suru channel
  - task		Schedule a new Task
- - version	Print the Suru version (in SemVer 2.0)
+ - version (v)	Print the Suru version (in SemVer 2.0)
 `[1:]
 
 	if outs := new(cmd.Help).Help(); outs != expect {
